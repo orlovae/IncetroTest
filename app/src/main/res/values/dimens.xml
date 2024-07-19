@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Global Padding -->
+    <dimen name="x_x_small_padding">4dp</dimen>
+    <dimen name="extra_small_padding">8dp</dimen>
+    <dimen name="small_padding">14dp</dimen>
+    <dimen name="medium_padding">16dp</dimen>
+    <dimen name="large_padding">24dp</dimen>
+<!--    <dimen name="bottom_button_role_screen_padding">29dp</dimen>-->
+<!--    <dimen name="extra_large_padding">32dp</dimen>-->
+<!--    <dimen name="large_bottom_padding">45dp</dimen>-->
+<!--    <dimen name="small_snackbar_bottom_padding">80dp</dimen>-->
+<!--    <dimen name="medium_snackbar_bottom_padding">170dp</dimen>-->
+
+    <!-- Global Size -->
+    <dimen name="height_card">160dp</dimen>
+<!--    <dimen name="size_progress_indicator">52dp</dimen>-->
+<!--    <dimen name="width_preview">40dp</dimen>-->
+<!--    <dimen name="height_button">45dp</dimen>-->
+
+    <!-- Global thickness -->
+<!--    <dimen name="thickness_indicator_loading">5dp</dimen>-->
+
+    <!-- Global elevation -->
+<!--    <dimen name="medium_elevation">5dp</dimen>-->
+</resources>
