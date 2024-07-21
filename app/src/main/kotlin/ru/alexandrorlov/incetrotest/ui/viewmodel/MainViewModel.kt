@@ -1,6 +1,5 @@
 package ru.alexandrorlov.incetrotest.ui.viewmodel
 
-//import ru.alexandrorlov.incetrotest.common.BaseState
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
@@ -14,14 +13,14 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import ru.alexandrorlov.incetrotest.data.local.models.OrganizationsDBO
-import ru.alexandrorlov.incetrotest.main.domain.repository.MainRepository
+import ru.alexandrorlov.incetrotest.main.domain.usecase.MainUseCase
 import ru.alexandrorlov.incetrotest.ui.mapper.fromDBOToUI
 import ru.alexandrorlov.incetrotest.ui.models.MainState
 import timber.log.Timber
 import javax.inject.Inject
 
 class MainViewModel @Inject constructor(
-    private val mainRepository: MainRepository,
+    private val mainUseCase: MainUseCase,
 ) : ViewModel() {
 
     private val _state: MutableStateFlow<MainState> = MutableStateFlow(MainState.Loading)
@@ -38,14 +37,13 @@ class MainViewModel @Inject constructor(
     }
 
     private fun loadAllOrganization() {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             kotlin.runCatching {
-                mainRepository.getAllOrganizations()
+                mainUseCase.getAllOrganizations()
                     .map {list ->
-                        Timber.tag("OAE").d("list = $list")
                         list.map { it.fromDBOToUI() }
                     }.collect {
-                            _state.emit(MainState.Content(it))
+                        _state.emit(MainState.Content(it))
                     }
             }.getOrElse {
                 _state.emit(MainState.Error(it.message ?: "ERROR"))
@@ -56,7 +54,7 @@ class MainViewModel @Inject constructor(
     private fun observeOnClick() {
         onClickFavoriteIcon
             .onEach {
-                mainRepository.changeFavorite(it)
+                mainUseCase.changeFavorite(it)
             }
             .flowOn(Dispatchers.IO)
             .launchIn(viewModelScope)
@@ -64,7 +62,8 @@ class MainViewModel @Inject constructor(
 
     private fun observeCountFavorite() {
         viewModelScope.launch(Dispatchers.IO) {
-            mainRepository.getAllFavorite().collect {
+            mainUseCase.getAllFavorite().collect {
+                Timber.tag("OAE").d("size list favorite is ${it.size}")
                 countFavoriteIcon.emit(getCountFavorite(it))
             }
         }

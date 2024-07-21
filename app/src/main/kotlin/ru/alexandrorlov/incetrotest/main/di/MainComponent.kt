@@ -8,6 +8,7 @@ import ru.alexandrorlov.incetrotest.di.MultiViewModelFactory
     dependencies = [MainDependencies::class],
     modules = [MainModule::class]
 )
+@MainScope
 interface MainComponent {
 
     val factory: MultiViewModelFactory

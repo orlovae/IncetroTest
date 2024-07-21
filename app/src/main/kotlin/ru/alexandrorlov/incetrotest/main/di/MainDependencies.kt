@@ -1,10 +1,13 @@
 package ru.alexandrorlov.incetrotest.main.di
 
-import retrofit2.Retrofit
-import ru.alexandrorlov.incetrotest.data.local.AppDatabase
+import ru.alexandrorlov.incetrotest.common.domain.repository.FavoriteRepository
+import ru.alexandrorlov.incetrotest.data.local.dao.OrganizationsDao
+import ru.alexandrorlov.incetrotest.main.data.source.api.MainApi
 
 interface MainDependencies {
-    fun retrofit(): Retrofit
+    fun mainApi(): MainApi
 
-    fun db(): AppDatabase
+    fun organizationsDao(): OrganizationsDao
+
+    fun favoriteRepository(): FavoriteRepository
 }
