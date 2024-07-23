@@ -1,8 +1,9 @@
 package ru.alexandrorlov.incetrotest.detail.domain.repository
 
-import ru.alexandrorlov.incetrotest.data.local.models.OrganizationsDBO
+import kotlinx.coroutines.flow.Flow
+import ru.alexandrorlov.incetrotest.data.local.models.OrganizationDBO
 
 interface DetailRepository {
 
-    suspend fun getOrganizationById(id: Long): OrganizationsDBO
+    suspend fun getOrganizationById(id: Long): Flow<OrganizationDBO>
 }

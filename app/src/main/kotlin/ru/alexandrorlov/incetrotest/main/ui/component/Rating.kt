@@ -1,4 +1,4 @@
-package ru.alexandrorlov.incetrotest.ui.component.main
+package ru.alexandrorlov.incetrotest.main.ui.component
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -52,6 +52,6 @@ private fun TextRating(
 ) {
     Text(
         text = rate,
-        style = MaterialTheme.TypographyIncerto.ratingCard,
+        style = MaterialTheme.TypographyIncerto.ratingMain,
     )
 }

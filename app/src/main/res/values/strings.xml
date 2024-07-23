@@ -2,6 +2,9 @@
     <string name="app_name">IncetroTest</string>
     <string name="no_check">no check</string>
     <string name="no_rate">no rate</string>
+    <string name="no_category">no category</string>
+    <string name="no_description">There is no description</string>
     <string name="no_cuisines">no cuisines</string>
     <string name="restaurants">Рестораны</string>
+    <string name="description">Описание</string>
 </resources>

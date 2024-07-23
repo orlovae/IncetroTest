@@ -1,4 +1,4 @@
-package ru.alexandrorlov.incetrotest.ui.models
+package ru.alexandrorlov.incetrotest.main.ui.models
 
 sealed class MainState {
     data object Loading : MainState()

@@ -6,7 +6,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 
@@ -14,7 +13,7 @@ val Typography = Typography()
 
 data class TypographyIncerto(
     val titleTopBar: TextStyle = TextStyle(
-        fontFamily = FontFamily.Default,
+        fontFamily = Roboto,
         fontWeight = FontWeight.W600,
         fontSize = 16.sp,
         color = Black,
@@ -36,11 +35,35 @@ data class TypographyIncerto(
         fontSize = 15.sp,
         color = GrayText,
     ),
-    val ratingCard: TextStyle = TextStyle(
+    val ratingMain: TextStyle = TextStyle(
         fontFamily = SFFontFamily,
         fontWeight = FontWeight.W500,
         fontSize = 15.sp,
         color = Black,
+    ),
+    val titleHeader: TextStyle = TextStyle(
+        fontFamily = SFFontFamily,
+        fontWeight = FontWeight.W700,
+        fontSize = 20.sp,
+        color = Black,
+    ),
+    val ratingDetail: TextStyle = TextStyle(
+        fontFamily = SFFontFamily,
+        fontWeight = FontWeight.W700,
+        fontSize = 15.sp,
+        color = IconBackground,
+    ),
+    val titleDescription: TextStyle = TextStyle(
+        fontFamily = SFFontFamily,
+        fontWeight = FontWeight.W700,
+        fontSize = 17.sp,
+        color = Black,
+    ),
+    val description: TextStyle = TextStyle(
+        fontFamily = SFFontFamily,
+        fontWeight = FontWeight.W400,
+        fontSize = 15.sp,
+        color = GrayText,
     ),
 )
 

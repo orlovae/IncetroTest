@@ -1,7 +1,6 @@
 package ru.alexandrorlov.incetrotest.main.di
 
 import dagger.Component
-import ru.alexandrorlov.incetrotest.MainActivity
 import ru.alexandrorlov.incetrotest.di.MultiViewModelFactory
 
 @Component(
@@ -13,7 +12,7 @@ interface MainComponent {
 
     val factory: MultiViewModelFactory
 
-    fun inject(mainActivity: MainActivity)
+//    fun inject(mainActivity: MainActivity)
 
     @Component.Factory
     interface MainComponentFactory {

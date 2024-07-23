@@ -5,47 +5,68 @@ import com.google.gson.annotations.SerializedName
 
 data class OrganizationDetailRemote(
     @SerializedName("averageCheck")
-    val averageCheck: List<Any> = emptyList(),
+    private val _averageCheck: List<Double?>?,
     @SerializedName("categoryName")
-    val categoryName: String = "",
+    val categoryName: String?,
     @SerializedName("cuisines")
-    val cuisines: List<Any> = emptyList(),
+    private val _cuisines: List<String?>?,
     @SerializedName("detailedInfo")
-    val detailedInfo: String = "",
+    private val _detailedInfo: String?,
     @SerializedName("discount")
-    val discount: Int? = null,
+    val discount: Int?,
     @SerializedName("distance")
-    val distance: Any? = null,
+    val distance: Any?,
     @SerializedName("email")
-    val email: String = "",
+    val email: String?,
     @SerializedName("id")
-    val id: Long? = null,
+    val id: Long?,
     @SerializedName("isFavorite")
-    val isFavorite: Boolean? = null,
+    private val _isFavorite: Boolean?,
     @SerializedName("location")
-    val location: LocationRemote? = null,
+    val location: LocationRemote?,
     @SerializedName("name")
-    val name: String = "",
+    private val _name: String?,
     @SerializedName("phones")
-    val phones: List<String> = emptyList(),
+    val phones: List<String?>?,
     @SerializedName("photos")
-    val photos: List<String> = emptyList(),
+    private val _photos: List<String?>?,
     @SerializedName("rate")
-    val rate: String = "",
+    private val _rate: String?,
     @SerializedName("rateCount")
-    val rateCount: Int? = null,
+    val rateCount: Int?,
     @SerializedName("review")
-    val review: Any? = null,
+    val review: Any?,
     @SerializedName("reviewCount")
-    val reviewCount: Int? = null,
+    val reviewCount: Int?,
     @SerializedName("schedule")
-    val schedule: List<ScheduleRemote> = emptyList(),
+    val schedule: List<ScheduleRemote?>?,
     @SerializedName("serviceLanguages")
-    val serviceLanguages: List<String> = emptyList(),
+    val serviceLanguages: List<String?>?,
     @SerializedName("services")
-    val services: List<Any> = emptyList(),
+    val services: List<Any?>?,
     @SerializedName("socials")
-    val socials: List<SocialRemote> = emptyList(),
+    val socials: List<SocialRemote?>?,
     @SerializedName("urls")
-    val urls: List<String> = emptyList(),
-)
+    val urls: List<String?>?,
+) {
+    val averageCheck: List<Double>
+        get() = _averageCheck?.filterNotNull() ?: emptyList()
+
+    val cuisines: List<String>
+        get() = _cuisines?.filterNotNull() ?: emptyList()
+
+    val detailedInfo: String
+        get() = _detailedInfo ?: ""
+
+    val isFavorite: Boolean
+        get() = _isFavorite ?: false
+
+    val name: String
+        get() = _name ?: ""
+
+    val photos: List<String>
+        get() = _photos?.filterNotNull() ?: emptyList()
+
+    val rate: String
+        get() = _rate ?: ""
+}

@@ -1,4 +1,4 @@
-package ru.alexandrorlov.incetrotest.ui.models
+package ru.alexandrorlov.incetrotest.main.ui.models
 
 import androidx.annotation.DrawableRes
 import ru.alexandrorlov.incetrotest.utils.StringValue

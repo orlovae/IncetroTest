@@ -6,7 +6,7 @@ import dagger.Provides
 import dagger.multibindings.IntoMap
 import ru.alexandrorlov.incetrotest.di.ViewModelKey
 import ru.alexandrorlov.incetrotest.main.domain.usecase.MainUseCase
-import ru.alexandrorlov.incetrotest.ui.viewmodel.MainViewModel
+import ru.alexandrorlov.incetrotest.main.ui.viewmodel.MainViewModel
 
 @Module(includes = [MainBindModule::class])
 class MainModule {

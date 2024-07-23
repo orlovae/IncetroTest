@@ -1,7 +1,6 @@
 package ru.alexandrorlov.incetrotest.data.network.model
 
 import com.google.gson.annotations.SerializedName
-import ru.alexandrorlov.incetrotest.utils.removeNullValueList
 
 data class OrganizationRemote(
     @SerializedName("averageCheck")
@@ -20,18 +19,10 @@ data class OrganizationRemote(
     private val _rate: String?,
 ) {
     val averageCheck: List<Double>
-        get() = if (_averageCheck != null) {
-            removeNullValueList(_averageCheck)
-        } else {
-            emptyList<Double>()
-        }
+        get() = _averageCheck?.filterNotNull() ?: emptyList()
 
     val cuisines: List<String>
-        get() = if (_cuisines != null) {
-            removeNullValueList(_cuisines)
-        } else {
-            emptyList<String>()
-        }
+        get() = _cuisines?.filterNotNull() ?: emptyList()
 
     val isFavorite: Boolean
         get() = _isFavorite ?: false

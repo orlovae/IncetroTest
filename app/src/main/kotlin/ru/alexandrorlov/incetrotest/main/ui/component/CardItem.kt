@@ -1,4 +1,4 @@
-package ru.alexandrorlov.incetrotest.ui.component.main
+package ru.alexandrorlov.incetrotest.main.ui.component
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -23,10 +23,9 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import ru.alexandrorlov.incetrotest.R
-import ru.alexandrorlov.incetrotest.ui.models.OrganizationUi
+import ru.alexandrorlov.incetrotest.main.ui.models.OrganizationUi
 import ru.alexandrorlov.incetrotest.ui.theme.Black
 import ru.alexandrorlov.incetrotest.ui.theme.IconBackground
 import ru.alexandrorlov.incetrotest.ui.theme.TypographyIncerto
@@ -40,7 +39,7 @@ fun CardItem(
     val context = LocalContext.current
     Card(
         modifier = Modifier
-            .clip(shape = RoundedCornerShape(26.dp)),
+            .clip(shape = RoundedCornerShape(dimensionResource(id = R.dimen.card_radius))),
         colors = CardColors(
             containerColor = White,
             contentColor = Black,
@@ -52,7 +51,7 @@ fun CardItem(
             model = organization.photo,
             modifier = Modifier
                 .fillMaxWidth()
-                .height(dimensionResource(id = R.dimen.height_card)),
+                .height(dimensionResource(id = R.dimen.height_card_item)),
             error = painterResource(id = R.drawable.ic_launcher_error),
             contentDescription = "",
             contentScale = ContentScale.FillWidth

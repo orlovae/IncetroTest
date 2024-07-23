@@ -1,4 +1,4 @@
-package ru.alexandrorlov.incetrotest.ui.viewmodel
+package ru.alexandrorlov.incetrotest.main.ui.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -12,11 +12,10 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
-import ru.alexandrorlov.incetrotest.data.local.models.OrganizationsDBO
+import ru.alexandrorlov.incetrotest.data.local.models.OrganizationDBO
 import ru.alexandrorlov.incetrotest.main.domain.usecase.MainUseCase
-import ru.alexandrorlov.incetrotest.ui.mapper.fromDBOToUI
-import ru.alexandrorlov.incetrotest.ui.models.MainState
-import timber.log.Timber
+import ru.alexandrorlov.incetrotest.main.ui.mapper.toUI
+import ru.alexandrorlov.incetrotest.main.ui.models.MainState
 import javax.inject.Inject
 
 class MainViewModel @Inject constructor(
@@ -41,7 +40,7 @@ class MainViewModel @Inject constructor(
             kotlin.runCatching {
                 mainUseCase.getAllOrganizations()
                     .map {list ->
-                        list.map { it.fromDBOToUI() }
+                        list.map { it.toUI() }
                     }.collect {
                         _state.emit(MainState.Content(it))
                     }
@@ -63,13 +62,12 @@ class MainViewModel @Inject constructor(
     private fun observeCountFavorite() {
         viewModelScope.launch(Dispatchers.IO) {
             mainUseCase.getAllFavorite().collect {
-                Timber.tag("OAE").d("size list favorite is ${it.size}")
                 countFavoriteIcon.emit(getCountFavorite(it))
             }
         }
     }
 
-    private fun getCountFavorite(list: List<OrganizationsDBO>): Int =
+    private fun getCountFavorite(list: List<OrganizationDBO>): Int =
         list.count {
             it.isFavorite
         }

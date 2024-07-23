@@ -1,9 +1,10 @@
 package ru.alexandrorlov.incetrotest.common.data.repository
 
+import kotlinx.coroutines.flow.first
 import ru.alexandrorlov.incetrotest.common.data.source.api.FavoriteRemoteSource
 import ru.alexandrorlov.incetrotest.common.domain.repository.FavoriteRepository
 import ru.alexandrorlov.incetrotest.data.local.dao.OrganizationsDao
-import ru.alexandrorlov.incetrotest.data.local.models.OrganizationsDBO
+import ru.alexandrorlov.incetrotest.data.local.models.OrganizationDBO
 import ru.alexandrorlov.incetrotest.di.AppScope
 import javax.inject.Inject
 
@@ -14,9 +15,9 @@ class FavoriteRepositoryImpl @Inject constructor(
     ) : FavoriteRepository {
 
     override suspend fun changeFavorite(id: Long) {
-        val clickOrganization = localSource.getOrganizationById(id)
+        val clickOrganization = localSource.getOrganizationById(id).first()
         val isFavorite = clickOrganization.isFavorite
-        val newClickOrganization: OrganizationsDBO = clickOrganization.copy(isFavorite = isFavorite.not())
+        val newClickOrganization: OrganizationDBO = clickOrganization.copy(isFavorite = isFavorite.not())
 
         localSource.insertOrganization(newClickOrganization)
 

@@ -5,9 +5,9 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import ru.alexandrorlov.incetrotest.data.local.converters.Converters
 import ru.alexandrorlov.incetrotest.data.local.dao.OrganizationsDao
-import ru.alexandrorlov.incetrotest.data.local.models.OrganizationsDBO
+import ru.alexandrorlov.incetrotest.data.local.models.OrganizationDBO
 
-@Database(entities = [OrganizationsDBO::class], version = 1)
+@Database(entities = [OrganizationDBO::class], version = 1)
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
 

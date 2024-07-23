@@ -2,6 +2,7 @@ package ru.alexandrorlov.incetrotest.detail.di
 
 import dagger.Component
 import ru.alexandrorlov.incetrotest.di.MultiViewModelFactory
+import ru.alexandrorlov.incetrotest.ui.theme.MainActivity
 
 @Component(
     dependencies = [DetailDependencies::class],
@@ -12,7 +13,7 @@ interface DetailComponent {
 
     val factory: MultiViewModelFactory
 
-//    fun inject(mainActivity: MainActivity)
+    fun inject(mainActivity: MainActivity)
 
     @Component.Factory
     interface DetailComponentFactory {

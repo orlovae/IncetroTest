@@ -5,7 +5,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "organizations")
-data class OrganizationsDBO(
+data class OrganizationDBO(
     @PrimaryKey(autoGenerate = false)
     @ColumnInfo("id")
     val id: Long,
