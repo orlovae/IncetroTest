@@ -1,19 +1,21 @@
 package ru.alexandrorlov.incetrotest.detail.di
 
-import androidx.lifecycle.ViewModel
+import dagger.Binds
 import dagger.Module
-import dagger.Provides
 import dagger.multibindings.IntoMap
-import ru.alexandrorlov.incetrotest.detail.domain.usecase.DetailUseCase
+import ru.alexandrorlov.incetrotest.common.di.ViewModelAssistedFactory
+import ru.alexandrorlov.incetrotest.common.di.ViewModelAssistedFactoryKey
+import ru.alexandrorlov.incetrotest.common.di.ViewModelFactoryModule
 import ru.alexandrorlov.incetrotest.detail.ui.viewmodel.DetailViewModel
-import ru.alexandrorlov.incetrotest.di.ViewModelKey
 
-@Module(includes = [DetailBindModule::class])
-class DetailModule {
+@Module(includes = [
+    DetailBindModule::class,
+    ViewModelFactoryModule::class,
+])
+interface DetailModule {
 
-    @IntoMap
-    @ViewModelKey(DetailViewModel::class)
-    @Provides
-    fun provideDetailViewModel(detailUseCase: DetailUseCase): ViewModel =
-        DetailViewModel(detailUseCase)
+    @Binds
+    @[IntoMap ViewModelAssistedFactoryKey(DetailViewModel::class)]
+    fun bindsDetailViewModelFactory(factory: DetailViewModel.Factory):
+            ViewModelAssistedFactory<*>
 }

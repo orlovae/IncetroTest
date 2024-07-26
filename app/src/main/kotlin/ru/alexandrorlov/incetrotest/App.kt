@@ -1,20 +1,30 @@
 package ru.alexandrorlov.incetrotest
 
 import android.app.Application
+import ru.alexandrorlov.incetrotest.detail.di.DaggerDetailComponent
+import ru.alexandrorlov.incetrotest.detail.di.DetailComponent
 import ru.alexandrorlov.incetrotest.di.AppComponent
 import ru.alexandrorlov.incetrotest.di.DaggerAppComponent
 import timber.log.Timber
 
 class App : Application() {
 
+    init {
+        Timber.tag("OAE").d("App start")
+    }
+
     override fun onCreate() {
         super.onCreate()
         initTimber()
         appComponent = DaggerAppComponent.factory().create(this)
+        detailComponent = DaggerDetailComponent.factory().create(appComponent)
+
     }
 
     companion object {
-        lateinit var appComponent: AppComponent
+        private lateinit var appComponent: AppComponent
+        lateinit var detailComponent: DetailComponent
+
     }
 
     private fun initTimber() {
