@@ -31,5 +31,9 @@ sealed class Screen {
                 navArgument(idItem) { type = NavType.StringType }
             )
         }
+
+        data class Arg(
+            val id: Long
+        )
     }
 }
