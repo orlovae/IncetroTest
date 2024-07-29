@@ -26,6 +26,7 @@ import ru.alexandrorlov.incetrotest.feature.domain.usecase.DetailUseCase
 import ru.alexandrorlov.incetrotest.feature.ui.mapper.toOrganizationDetailUI
 import ru.alexandrorlov.incetrotest.feature.ui.models.OrganizationDetailUI
 import ru.alexandrorlov.incetrotest.utils.Constant.ID_ARG_NAME
+import timber.log.Timber
 
 class DetailViewModel @AssistedInject constructor(
     @Assisted private val handle: SavedStateHandle,
@@ -57,6 +58,9 @@ class DetailViewModel @AssistedInject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             kotlin.runCatching {
                 detailUseCase.getOrganizationById(id)
+                    .onEach {
+                        Timber.tag("OAE").d("item =$it")
+                    }
                     .map {
                         it.toOrganizationDetailUI()
                     }.collect {

@@ -12,7 +12,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import ru.alexandrorlov.incetrotest.R
+import ru.alexandrorlov.incetrotest.feature.ui.component.common.TextRating
 import ru.alexandrorlov.incetrotest.ui.theme.IconBackground
 import ru.alexandrorlov.incetrotest.ui.theme.TypographyIncerto
 import ru.alexandrorlov.incetrotest.utils.Constant.STARS_RATING_COUNT
@@ -27,21 +29,14 @@ fun RatingBar(
         verticalAlignment = Alignment.CenterVertically
     ) {
 
-        val rateInt: Int = rate.toInteger()
-        val indexMax: Int = STARS_RATING_COUNT - 1
-
-        for (i in 0..indexMax) {
-            if (i < rateInt) {
-                Star(type = TypeStar.STAR_FULL)
-            } else {
-                Star(type = TypeStar.STAR_EMPTY)
-            }
-
-            if (i < indexMax) {
-                Spacer(modifier = Modifier
-                    .size(dimensionResource(id = R.dimen.x_x_x_small_padding)),
-                )
-            }
+        if (rate.isBlank()) {
+            TextRating(
+                rate = stringResource(id = R.string.no_rate),
+            )
+        } else {
+            FullRatingLine(
+                rate = rate
+            )
         }
 
         Spacer(modifier = Modifier
@@ -57,7 +52,30 @@ fun RatingBar(
 }
 
 @Composable
-fun Star(type: TypeStar) {
+private fun FullRatingLine(
+    rate: String,
+) {
+    val rateInt: Int = rate.toInteger()
+    val indexMax: Int = STARS_RATING_COUNT - 1
+
+    for (i in 0..indexMax) {
+        if (i < rateInt) {
+            Star(type = TypeStar.STAR_FULL)
+        } else {
+            Star(type = TypeStar.STAR_EMPTY)
+        }
+
+        if (i < indexMax) {
+            Spacer(
+                modifier = Modifier
+                    .size(dimensionResource(id = R.dimen.x_x_x_small_padding)),
+            )
+        }
+    }
+}
+
+@Composable
+private fun Star(type: TypeStar) {
     Box(
         modifier = Modifier
             .size(dimensionResource(id = R.dimen.size_start))

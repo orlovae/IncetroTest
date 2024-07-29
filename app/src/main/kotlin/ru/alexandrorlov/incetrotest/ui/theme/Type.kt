@@ -34,7 +34,7 @@ data class TypographyIncerto(
         fontSize = 15.sp,
         color = GrayText,
     ),
-    val ratingMain: TextStyle = TextStyle(
+    val rating: TextStyle = TextStyle(
         fontFamily = SFFontFamily,
         fontWeight = FontWeight.W500,
         fontSize = 15.sp,
