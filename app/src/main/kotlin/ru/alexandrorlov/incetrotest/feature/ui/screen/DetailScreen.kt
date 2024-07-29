@@ -15,6 +15,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
+import androidx.navigation.NavHostController
 import kotlinx.coroutines.flow.MutableSharedFlow
 import ru.alexandrorlov.incetrotest.R
 import ru.alexandrorlov.incetrotest.common.di.daggerViewModel
@@ -28,6 +29,7 @@ import ru.alexandrorlov.incetrotest.feature.ui.viewmodel.DetailViewModel
 
 @Composable
 fun DetailScreen(
+    navController: NavHostController,
     viewModel: DetailViewModel = daggerViewModel(),
 ){
     val state = viewModel.state.collectAsState()
@@ -46,6 +48,7 @@ fun DetailScreen(
                 topBar = {
                     TopBarDetail(
                         title = organization.categoryName.asString(context),
+                        navController = navController,
                     )
                 },
             ) { innerPadding ->

@@ -9,6 +9,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.painterResource
+import androidx.navigation.NavHostController
 import ru.alexandrorlov.incetrotest.R
 import ru.alexandrorlov.incetrotest.ui.theme.Black
 import ru.alexandrorlov.incetrotest.ui.theme.TypographyIncerto
@@ -17,6 +18,7 @@ import ru.alexandrorlov.incetrotest.ui.theme.TypographyIncerto
 @Composable
 fun TopBarDetail(
     title: String,
+    navController: NavHostController,
 ){
     CenterAlignedTopAppBar(
         title = {
@@ -27,7 +29,7 @@ fun TopBarDetail(
         },
         navigationIcon = {
             IconButton(
-                onClick = {  }
+                onClick = { navController.popBackStack() }
             ) {
                 Icon(
                     painter = painterResource(id = R.drawable.baseline_arrow_back_24),
