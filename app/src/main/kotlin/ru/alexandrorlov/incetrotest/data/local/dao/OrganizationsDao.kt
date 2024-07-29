@@ -14,9 +14,6 @@ interface OrganizationsDao {
     @Query("SELECT * FROM organizations")
     fun getAll(): Flow<List<OrganizationDBO>>
 
-    @Query("SELECT * FROM organizations WHERE organizations.isFavorite = 1")
-    fun getAllFavorite(): Flow<List<OrganizationDBO>>
-
     @Query("SELECT * FROM organizations WHERE organizations.id = :id")
     fun getOrganizationById(id: Long): Flow<OrganizationDBO>
 

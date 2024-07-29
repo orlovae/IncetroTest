@@ -11,9 +11,9 @@ import retrofit2.create
 import ru.alexandrorlov.incetrotest.common.data.source.api.FavoriteApi
 import ru.alexandrorlov.incetrotest.data.network.api.AuthHeaderInterceptor
 import ru.alexandrorlov.incetrotest.data.network.api.Constant
-import ru.alexandrorlov.incetrotest.detail.data.source.api.DetailApi
 import ru.alexandrorlov.incetrotest.di.AppScope
-import ru.alexandrorlov.incetrotest.main.data.source.api.MainApi
+import ru.alexandrorlov.incetrotest.feature.data.source.api.DetailApi
+import ru.alexandrorlov.incetrotest.feature.data.source.api.MainApi
 
 @Module
 class NetworkModule {

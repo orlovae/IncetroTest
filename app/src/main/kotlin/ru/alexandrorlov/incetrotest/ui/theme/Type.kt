@@ -22,7 +22,6 @@ data class TypographyIncerto(
         fontFamily = SFFontFamily,
         fontWeight = FontWeight.W600,
         fontSize = 10.sp,
-        color = White,
     ),
     val titleCard: TextStyle = TextStyle(
         fontFamily = SFFontFamily,
@@ -64,6 +63,11 @@ data class TypographyIncerto(
         fontWeight = FontWeight.W400,
         fontSize = 15.sp,
         color = GrayText,
+    ),
+    val textSnackbar: TextStyle = TextStyle(
+        fontFamily = Roboto,
+        fontWeight = FontWeight.W500,
+        fontSize = 17.sp,
     ),
 )
 

@@ -12,9 +12,11 @@ class DaggerViewModelAssistedFactory @Inject constructor(
 
     @Suppress("UNCHECKED_CAST")
     override fun <VM : ViewModel> create(modelClass: Class<VM>, handle: SavedStateHandle): VM {
+
         val creator = assistedFactoryMap[modelClass] ?: assistedFactoryMap.asIterable().firstOrNull {
             modelClass.isAssignableFrom(it.key)
         }?.value ?: throw IllegalArgumentException("unknown model class $modelClass")
+
         return try {
             creator.get().create(handle) as VM
         } catch (e: Exception) {

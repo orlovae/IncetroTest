@@ -1,0 +1,88 @@
+package ru.alexandrorlov.incetrotest.feature.ui.screen
+
+import android.content.Context
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.Scaffold
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.dimensionResource
+import kotlinx.coroutines.flow.MutableSharedFlow
+import ru.alexandrorlov.incetrotest.R
+import ru.alexandrorlov.incetrotest.common.di.daggerViewModel
+import ru.alexandrorlov.incetrotest.common.model.ScreenState
+import ru.alexandrorlov.incetrotest.feature.ui.component.detail.DescriptionCard
+import ru.alexandrorlov.incetrotest.feature.ui.component.detail.HeaderCard
+import ru.alexandrorlov.incetrotest.feature.ui.component.detail.PhotoItem
+import ru.alexandrorlov.incetrotest.feature.ui.component.detail.TopBarDetail
+import ru.alexandrorlov.incetrotest.feature.ui.models.OrganizationDetailUI
+import ru.alexandrorlov.incetrotest.feature.ui.viewmodel.DetailViewModel
+
+@Composable
+fun DetailScreen(
+    viewModel: DetailViewModel = daggerViewModel(),
+){
+    val state = viewModel.state.collectAsState()
+
+    when (val data = state.value) {
+        ScreenState.Loading -> {
+        }
+
+        is ScreenState.Content -> {
+            val context: Context = LocalContext.current
+
+            val organization: OrganizationDetailUI = data.content
+            val onClickFavoriteIcon: MutableSharedFlow<Long> = viewModel.onClickFavoriteIcon
+
+            Scaffold(
+                topBar = {
+                    TopBarDetail(
+                        title = organization.categoryName.asString(context),
+                    )
+                },
+            ) { innerPadding ->
+                Column(
+                    modifier = Modifier
+                        .padding(innerPadding),
+                ) {
+                    LazyRow(
+                        horizontalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.extra_small_padding)),
+                        contentPadding = PaddingValues(vertical = dimensionResource(id = R.dimen.extra_small_padding)),
+                    ) {
+                        items(organization.photos) { urlPhoto ->
+                            PhotoItem(
+                                urlPhoto = urlPhoto,
+                            )
+                        }
+                    }
+
+                    HeaderCard(
+                        organization = organization,
+                        onClick = { onClickFavoriteIcon.tryEmit(it) },
+                    )
+
+                    Spacer(
+                        modifier = Modifier
+                            .size(dimensionResource(id = R.dimen.extra_small_padding)),
+                    )
+
+                    DescriptionCard(
+                        description = organization.detailedInfo.asString(context)
+                    )
+                }
+            }
+        }
+
+        is ScreenState.Error -> {
+
+        }
+    }
+}
