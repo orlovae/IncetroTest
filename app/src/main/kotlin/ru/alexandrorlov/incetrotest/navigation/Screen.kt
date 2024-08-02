@@ -31,9 +31,9 @@ sealed class Screen {
                 navArgument(idItem) { type = NavType.StringType }
             )
         }
+    }
 
-        data class Arg(
-            val id: Long
-        )
+    companion object Constant {
+        const val idItem = ID_ARG_NAME
     }
 }

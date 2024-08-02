@@ -5,12 +5,12 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.ProvidedValue
 import androidx.compose.runtime.compositionLocalOf
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.createSavedStateHandle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import ru.alexandrorlov.incetrotest.feature.di.MultiViewModelFactory
 
 @Composable
 fun Inject(
-    viewModelFactory: ViewModelFactory,
+    viewModelFactory: MultiViewModelFactory,
     content: @Composable () -> Unit,
 ) {
     CompositionLocalProvider(
@@ -23,13 +23,12 @@ fun Inject(
 inline fun <reified VM : ViewModel> daggerViewModel(): VM {
     val factory = getViewModelFactory()
     return viewModel {
-        val savedStateHandle = createSavedStateHandle()
-        factory.create(VM::class.java, savedStateHandle)
+        factory.create(VM::class.java)
     }
 }
 
 @Composable
-fun getViewModelFactory(): ViewModelFactory {
+fun getViewModelFactory(): MultiViewModelFactory {
     return checkNotNull(LocalViewModelFactory.current) {
         "No ViewModelFactory was provided via LocalViewModelFactory"
     }
@@ -37,14 +36,14 @@ fun getViewModelFactory(): ViewModelFactory {
 
 object LocalViewModelFactory {
     private val LocalViewModelFactory =
-        compositionLocalOf<ViewModelFactory?> { null }
+        compositionLocalOf<MultiViewModelFactory?> { null }
 
-    val current: ViewModelFactory?
+    val current: MultiViewModelFactory?
         @Composable
         get() = LocalViewModelFactory.current
 
-    infix fun provides(viewModelFactory: ViewModelFactory):
-            ProvidedValue<ViewModelFactory?> {
+    infix fun provides(viewModelFactory: MultiViewModelFactory):
+            ProvidedValue<MultiViewModelFactory?> {
         return LocalViewModelFactory.provides(viewModelFactory)
     }
 }

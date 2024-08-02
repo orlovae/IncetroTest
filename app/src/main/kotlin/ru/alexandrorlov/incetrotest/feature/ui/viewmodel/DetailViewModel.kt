@@ -1,11 +1,7 @@
 package ru.alexandrorlov.incetrotest.feature.ui.viewmodel
 
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import dagger.assisted.Assisted
-import dagger.assisted.AssistedFactory
-import dagger.assisted.AssistedInject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -13,27 +9,22 @@ import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.retry
 import kotlinx.coroutines.launch
-import ru.alexandrorlov.incetrotest.common.di.ViewModelAssistedFactory
 import ru.alexandrorlov.incetrotest.common.model.ScreenState
 import ru.alexandrorlov.incetrotest.common.model.SideEffect
 import ru.alexandrorlov.incetrotest.feature.domain.usecase.DetailUseCase
 import ru.alexandrorlov.incetrotest.feature.ui.mapper.toOrganizationDetailUI
 import ru.alexandrorlov.incetrotest.feature.ui.models.OrganizationDetailUI
-import ru.alexandrorlov.incetrotest.utils.Constant.ID_ARG_NAME
+import javax.inject.Inject
 
-class DetailViewModel @AssistedInject constructor(
-    @Assisted private val handle: SavedStateHandle,
+class DetailViewModel @Inject constructor(
     private val detailUseCase: DetailUseCase,
 ) : ViewModel() {
-
-    @AssistedFactory
-    interface Factory : ViewModelAssistedFactory<DetailViewModel>
 
     private val _state: MutableStateFlow<ScreenState<OrganizationDetailUI>> =
         MutableStateFlow(ScreenState.Loading)
@@ -46,7 +37,7 @@ class DetailViewModel @AssistedInject constructor(
     val onClickFavoriteIcon: MutableSharedFlow<Long> =
         MutableSharedFlow(extraBufferCapacity = 1)
 
-    val id: Long = handle.get<String>(ID_ARG_NAME)?.toLong() ?: throw IllegalArgumentException("Invalid item id")
+    val idState: MutableStateFlow<Long> = MutableStateFlow(-1L)
 
     init {
         loadOrganization()
@@ -56,12 +47,23 @@ class DetailViewModel @AssistedInject constructor(
     private fun loadOrganization() {
         viewModelScope.launch(Dispatchers.IO) {
             kotlin.runCatching {
-                detailUseCase.getOrganizationById(id)
-                    .map {
-                        it.toOrganizationDetailUI()
-                    }.collect {
-                            _state.emit(ScreenState.Content(it))
+                idState.combine(detailUseCase.getOrganization()) { id, list ->
+
+                    if (id == -1L) {
+
+                        ScreenState.Loading
+
+                    } else {
+
+                        val organization: OrganizationDetailUI = list.first {
+                            it.id == id
+                        }.toOrganizationDetailUI()
+
+                        ScreenState.Content(organization)
                     }
+                }.collect {
+                    _state.emit(it)
+                }
             }.getOrElse {
                 _state.emit(ScreenState.Error(it.message ?: "ERROR"))
             }

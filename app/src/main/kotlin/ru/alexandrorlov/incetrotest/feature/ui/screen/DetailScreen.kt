@@ -35,9 +35,13 @@ import ru.alexandrorlov.incetrotest.feature.ui.viewmodel.DetailViewModel
 
 @Composable
 fun DetailScreen(
+    id: Long,
     navController: NavHostController,
     viewModel: DetailViewModel = daggerViewModel(),
 ){
+
+    viewModel.idState.tryEmit(id)
+
     val state = viewModel.state.collectAsState()
 
     when (val data = state.value) {

@@ -1,7 +1,6 @@
 package ru.alexandrorlov.incetrotest.feature.di
 
 import dagger.Component
-import ru.alexandrorlov.incetrotest.common.di.ViewModelFactory
 import ru.alexandrorlov.incetrotest.feature.di.dependecies.CommonDependencies
 import ru.alexandrorlov.incetrotest.feature.di.dependecies.DetailDependencies
 import ru.alexandrorlov.incetrotest.feature.di.dependecies.MainDependencies
@@ -17,7 +16,7 @@ import ru.alexandrorlov.incetrotest.feature.di.dependecies.MainDependencies
 @FeatureScope
 interface FeatureComponent {
 
-    fun getViewModelFactory(): ViewModelFactory
+    fun getViewModelFactory(): MultiViewModelFactory
 
     @Component.Factory
     interface FeatureComponentFactory {
