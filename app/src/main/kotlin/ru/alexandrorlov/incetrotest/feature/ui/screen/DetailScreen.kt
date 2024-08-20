@@ -37,12 +37,12 @@ import ru.alexandrorlov.incetrotest.feature.ui.viewmodel.DetailViewModel
 fun DetailScreen(
     id: Long,
     navController: NavHostController,
-    viewModel: DetailViewModel = daggerViewModel(),
+    detailViewModel: DetailViewModel = daggerViewModel(),
 ){
 
-    viewModel.idState.tryEmit(id)
+    detailViewModel.idState.tryEmit(id)
 
-    val state = viewModel.state.collectAsState()
+    val state = detailViewModel.state.collectAsState()
 
     when (val data = state.value) {
         ScreenState.Loading -> {
@@ -51,24 +51,23 @@ fun DetailScreen(
         is ScreenState.Content -> {
             val context: Context = LocalContext.current
 
-            val stateSideEffect = viewModel.sideEffect.collectAsState(initial = SideEffect.Init)
-
             val snackbarHostState = remember { SnackbarHostState() }
 
-            when (val sideEffect = stateSideEffect.value) {
-                SideEffect.Init -> Unit
+            LaunchedEffect(key1 = Unit) {
+                detailViewModel.sideEffect.collect { sideEffect ->
+                    when (sideEffect) {
 
-                is SideEffect.SnackBar -> {
-                    LaunchedEffect(key1 = Unit) {
-                        snackbarHostState.showSnackbar(
-                            message = sideEffect.message,
-                        )
+                        is SideEffect.SnackBar -> {
+                            snackbarHostState.showSnackbar(
+                                message = sideEffect.message,
+                            )
+                        }
                     }
                 }
             }
 
             val organization: OrganizationDetailUI = data.content
-            val onClickFavoriteIcon: MutableSharedFlow<Long> = viewModel.onClickFavoriteIcon
+            val onClickFavoriteIcon: MutableSharedFlow<Long> = detailViewModel.onClickFavoriteIcon
 
             Scaffold(
                 topBar = {

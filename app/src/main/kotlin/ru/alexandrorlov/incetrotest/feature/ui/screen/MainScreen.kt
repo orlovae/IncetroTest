@@ -40,18 +40,18 @@ fun MainScreen(
 
         is Content -> {
             val count = mainViewModel.countFavoriteIcon.collectAsState()
-            val stateSideEffect = mainViewModel.sideEffect.collectAsState(initial = SideEffect.Init)
 
             val snackbarHostState = remember { SnackbarHostState() }
 
-            when (val sideEffect = stateSideEffect.value) {
-                SideEffect.Init -> Unit
+            LaunchedEffect(key1 = Unit) {
+                mainViewModel.sideEffect.collect { sideEffect ->
+                    when (sideEffect) {
 
-                is SideEffect.SnackBar -> {
-                    LaunchedEffect(key1 = Unit) {
-                        snackbarHostState.showSnackbar(
-                            message = sideEffect.message,
-                        )
+                        is SideEffect.SnackBar -> {
+                            snackbarHostState.showSnackbar(
+                                message = sideEffect.message,
+                            )
+                        }
                     }
                 }
             }
